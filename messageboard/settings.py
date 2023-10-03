@@ -158,3 +158,5 @@ SITE_URL = os.environ.get("SITE_URL")
 MASTODON_URL = os.environ.get("MASTODON_URL")
 MASTODON_CLIENT_KEY = os.environ.get("MASTODON_CLIENT_KEY")
 MASTODON_CLIENT_SECRET = os.environ.get("MASTODON_CLIENT_SECRET")
+
+STATIC_ROOT = os.environ.get("STATIC_ROOT")
