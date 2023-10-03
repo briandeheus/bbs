@@ -5,7 +5,7 @@ from .models import Post
 
 # Post Admin
 class PostAdmin(admin.ModelAdmin):
-    autocomplete_fields = ['actor']
+    autocomplete_fields = ["actor"]
     list_display = ["title", "actor"]
 
 

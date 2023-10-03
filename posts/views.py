@@ -18,7 +18,6 @@ class CommentForm(forms.ModelForm):
 
 
 class ViewPost(views.View):
-
     def post(self, request, post_id):
         action = request.POST.get("action")
         post = Post.objects.get(pk=post_id)
@@ -44,7 +43,6 @@ class ViewPost(views.View):
 
 # Create your views here.
 class CreatePost(views.View):
-
     def post(self, request):
         form = SubmitForm(data=request.POST)
         form.instance.actor = request.user
