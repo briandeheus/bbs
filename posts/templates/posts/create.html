@@ -1,0 +1,21 @@
+{% extends "messageboard/base.html" %}
+
+{% block content %}
+    <div class="rounded shadow bg-white p-4">
+        <div class="text-sm mb-2 text-gray-900">
+            Posting as <span class="font-medium">@{{ request.user.display_name }}</span>
+        </div>
+        <form method="post" enctype="application/x-www-form-urlencoded">
+            {% csrf_token %}
+            <input class="rounded border border-gray-300 w-full p-2 text-sm mb-2" placeholder="The title of your post"
+                   name="title">
+            <textarea class="rounded border border-gray-300 w-full p-2 h-32 text-sm" placeholder=""
+                      name="body"></textarea>
+            <button class="rounded-md px-3 py-2 text-sm text-white bg-purple-700 hover:bg-purple-900 hover:text-white">
+                Post
+            </button>
+        </form>
+
+    </div>
+
+{% endblock %}

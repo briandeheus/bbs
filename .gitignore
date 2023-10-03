@@ -1,0 +1,23 @@
+# Python
+*.pyc
+*.pyo
+*.egg-info/
+__pycache__/
+*.env
+
+# Django
+*.sqlite3
+db.sqlite3
+media/
+
+# Tailwind
+/dist/
+/node_modules/
+
+# PyCharm
+.idea/
+
+# General
+.DS_Store
+*.swp
+*.swo

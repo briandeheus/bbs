@@ -1,0 +1,27 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" class="bg-gray-200">
+<head>
+    <meta charset="UTF-8">
+    <meta name="referrer" content="origin">
+    <title>Famichiki BBS</title>
+    <link rel="stylesheet" href={% static "messageboard/styles/styles.css" %}>
+    <style>
+        .truncate-multiline {
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
+    {% block head %}{% endblock %}
+</head>
+<body class="">
+{% include "messageboard/partials/navigation.html" %}
+<main class="max-w-4xl w-full mx-auto mt-4">
+    {% block content %}
+    {% endblock %}
+</main>
+</body>
+</html>
