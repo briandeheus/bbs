@@ -28,6 +28,7 @@ SECRET_KEY = "django-insecure-er@2phu$*u#ycxfi#%9elo%(c4a8r7ol%dqfi5&fsntvy+gjen
 DEBUG = True
 
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(",")
+CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS").split(",")
 
 # Application definition
 INSTALLED_APPS = [
@@ -160,4 +161,3 @@ MASTODON_CLIENT_KEY = os.environ.get("MASTODON_CLIENT_KEY")
 MASTODON_CLIENT_SECRET = os.environ.get("MASTODON_CLIENT_SECRET")
 
 STATIC_ROOT = os.environ.get("STATIC_ROOT")
-CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS")
