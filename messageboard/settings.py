@@ -147,6 +147,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = os.environ.get("STATIC_ROOT")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -160,4 +161,7 @@ MASTODON_URL = os.environ.get("MASTODON_URL")
 MASTODON_CLIENT_KEY = os.environ.get("MASTODON_CLIENT_KEY")
 MASTODON_CLIENT_SECRET = os.environ.get("MASTODON_CLIENT_SECRET")
 
-STATIC_ROOT = os.environ.get("STATIC_ROOT")
+MIN_POSTS_FOR_COMMENTING = int(os.environ.get("MIN_POSTS_FOR_COMMENTING", 0))
+MIN_POSTS_FOR_POSTING = int(os.environ.get("MIN_POSTS_FOR_POSTING", 0))
+MIN_ACCOUNT_AGE_FOR_COMMENTING = os.environ.get("MIN_ACCOUNT_AGE_FOR_COMMENTING")
+MIN_ACCOUNT_AGE_FOR_POSTING = os.environ.get("MIN_ACCOUNT_AGE_FOR_POSTING")

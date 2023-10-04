@@ -39,6 +39,8 @@ class Confirm(View):
         display_name = user["display_name"]
         avatar_url = user["avatar_static"]
         profile_url = user["url"]
+        registration_date = user["created_at"]
+        post_count = user["statuses_count"]
 
         try:
             user = User.objects.get()
@@ -46,9 +48,15 @@ class Confirm(View):
             user = User.objects.create(
                 username=user_id,
                 display_name=display_name,
+                authorization_token=token,
                 avatar_url=avatar_url,
                 profile_url=profile_url,
+                mastodon_registration_date=registration_date,
             )
+
+        # Always update the post count when logging in.
+        user.mastodon_post_count = post_count
+        user.save()
 
         login(request=request, user=user)
 

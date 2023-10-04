@@ -1,7 +1,10 @@
 from django import views, forms
-from django.shortcuts import render
+from django.conf import settings
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.utils import timezone
 
+from posts import methods as post_methods
 from posts.models import Post, Comment
 
 
@@ -45,12 +48,23 @@ class ViewPost(views.View):
 class CreatePost(views.View):
     def post(self, request):
         form = SubmitForm(data=request.POST)
+        [can_post, reason] = post_methods.can_post(
+            user=request.user,
+            min_posts_for_posting=settings.MIN_POSTS_FOR_POSTING,
+            min_account_age_for_posting=settings.MIN_ACCOUNT_AGE_FOR_POSTING,
+        )
+
+        if not can_post:
+            form.add_error(field=None, error=reason)
+
         form.instance.actor = request.user
 
-        form.is_valid()
+        if not form.is_valid():
+            return self.get(request=request, form=form)
+
         form.save()
 
-        return self.get(request=request)
+        return redirect(to=reverse("posts-view", kwargs=form.instance.pk))
 
-    def get(self, request):
-        return render(request, "posts/create.html")
+    def get(self, request, form=None):
+        return render(request, "posts/create.html", {"form": form})
