@@ -12,4 +12,4 @@ npx tailwindcss -o ./messageboard/static/messageboard/styles/styles.css
 pip install -r requirements.txt --extra-index-url "https://dl.fontawesome.com/$FONTAWESOME_TOKEN/fontawesome-pro/python/simple/"
 
 ./manage.py migrate
-./manage.py collectstatic --no-input
+./manage.py collectstatic --no-input -v 3
