@@ -9,5 +9,7 @@ git pull origin master
 npm ci
 npx tailwindcss -o ./messageboard/static/messageboard/styles/styles.css
 
+pip install -r requirements.txt
+
 ./manage.py migrate
 ./manage.py collectstatic --no-input
