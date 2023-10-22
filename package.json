@@ -1,10 +1,1 @@
-{
-  "devDependencies": {
-    "@tailwindcss/typography": "^0.5.10",
-    "tailwindcss": "^3.3.3"
-  },
-  "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.4.2",
-    "@fortawesome/pro-light-svg-icons": "^6.4.2"
-  }
-}
+{}
