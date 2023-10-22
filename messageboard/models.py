@@ -7,5 +7,5 @@ class User(AbstractUser):
     avatar_url = models.CharField(max_length=1024)
     profile_url = models.URLField()
     authorization_token = models.CharField(max_length=128)
-    mastodon_registration_date = models.DateTimeField(auto_now=True)
+    mastodon_registration_date = models.DateTimeField()
     mastodon_post_count = models.IntegerField(default=0)

@@ -41,6 +41,7 @@ class ViewPost(views.View):
 
     def get(self, request, post_id):
         post = Post.objects.get(pk=post_id)
+        post.increment_views()
         return render(request, "posts/view.html", {"post": post})
 
 
@@ -64,7 +65,7 @@ class CreatePost(views.View):
 
         form.save()
 
-        return redirect(to=reverse("posts-view", kwargs=form.instance.pk))
+        return redirect(to=reverse("post-view", kwargs={"post_id": form.instance.pk}))
 
     def get(self, request, form=None):
         return render(request, "posts/create.html", {"form": form})

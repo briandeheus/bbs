@@ -1,6 +1,8 @@
 from datetime import datetime, timedelta
 from typing import Optional
 
+from django.utils import timezone
+
 from messageboard.models import User
 
 
@@ -26,7 +28,8 @@ def can_post(
 
     if min_account_age_for_posting:
         min_age_delta = str_to_timedelta(min_account_age_for_posting)
-        if (datetime.now() - user.mastodon_registration_date) < min_age_delta:
+
+        if (timezone.now() - user.mastodon_registration_date) < min_age_delta:
             return [
                 False,
                 f"Account needs to be at least {min_account_age_for_posting} on your Mastodon server old to make a new post.",

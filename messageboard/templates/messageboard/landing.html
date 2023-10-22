@@ -1,5 +1,19 @@
 {% extends "messageboard/base.html" %}
 
+{% block head %}
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const search = document.getElementById("search");
+            search.addEventListener("keyup", (event) => {
+                if (event.key !== "Enter") return;
+
+                event.preventDefault();
+                window.location = `search?query=${encodeURI(search.value)}`;
+            });
+        });
+    </script>
+
+{% endblock %}
 {% block content %}
     <div>
         <div class="py-4">
@@ -14,13 +28,17 @@
                         </svg>
                     </div>
                     <input id="search" name="search"
+                           {% if query %}value="{{ query }}"{% endif %}
                            class="shadow block w-full rounded-md border-0 bg-white py-4 pl-10 pr-3 text-gray-900 placeholder:text-gray-400 focus:bg-white focus:text-gray-900 focus:ring-0 sm:leading-6"
-                           placeholder="Search" type="search">
+                           placeholder="Search by keywords or topic" type="search">
                 </div>
             </div>
         </div>
     </div>
-    {% for post in posts %}
+    {% for post in page_obj %}
         {% include "messageboard/partials/post.html" %}
     {% endfor %}
+    <div class="mb-12">
+        {% include "messageboard/partials/pagination.html" %}
+    </div>
 {% endblock %}

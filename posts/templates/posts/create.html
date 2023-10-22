@@ -1,5 +1,61 @@
 {% extends "messageboard/base.html" %}
 
+{% block head %}
+    <script>
+        async function uploadImageToAPI(fileInput) {
+
+            const body = document.getElementById("body");
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            // Extract the CSRF token from the hidden input field
+            const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+
+            try {
+                const response = await fetch('/api/v1/media', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': csrfToken  // Add the CSRF token to the request headers
+                    },
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const jsonResponse = await response.json();
+                const {thumbnail_url, url} = jsonResponse;
+
+                if (body.value === "") {
+                    body.value = `[![Image](${thumbnail_url})](${url})`;
+                } else {
+                    body.value = `${body.value}\n\n[![Image](${thumbnail_url})](${url})`;
+                }
+
+
+            } catch (error) {
+                console.error('Error uploading image:', error);
+            }
+
+
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const imageInput = document.getElementById("image-input");
+            const imageUploadBtn = document.getElementById("image-upload");
+            imageInput.addEventListener('change', function () {
+                uploadImageToAPI(this);
+            });
+
+            imageUploadBtn.addEventListener("click", () => {
+                imageInput.click();
+            });
+
+        });
+    </script>
+{% endblock %}
+
 {% block content %}
     <div class="rounded shadow bg-white p-4">
         <div class="text-sm mb-2 text-gray-900">
@@ -15,12 +71,15 @@
             <input class="rounded border border-gray-300 w-full p-2 text-sm mb-2" placeholder="The title of your post"
                    name="title">
             <textarea class="rounded border border-gray-300 w-full p-2 h-32 text-sm" placeholder=""
-                      name="body"></textarea>
+                      name="body" id="body"></textarea>
+            <div class="text-xs mb-4 text-right">
+                <span id="image-upload" class="text-gray-700 cursor-pointer"><i class="fa-sharp fa-upload"></i> Add image</span>
+            </div>
             <button class="rounded-md px-3 py-2 text-sm text-white bg-purple-700 hover:bg-purple-900 hover:text-white">
                 Post
             </button>
         </form>
-
+        <input type="file" id="image-input" class="hidden">
     </div>
 
 {% endblock %}

@@ -38,9 +38,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "fontawesomepro",
     "django_extensions",
     "messageboard",
     "posts",
+    "media",
 ]
 
 MIDDLEWARE = [
@@ -157,11 +159,24 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "messageboard.User"
 
 SITE_URL = os.environ.get("SITE_URL")
+
+# URL where mastodon is hosted
 MASTODON_URL = os.environ.get("MASTODON_URL")
+
+# Client key and secret from Mastodon application.
 MASTODON_CLIENT_KEY = os.environ.get("MASTODON_CLIENT_KEY")
 MASTODON_CLIENT_SECRET = os.environ.get("MASTODON_CLIENT_SECRET")
 
+# Limits for posts and comments
 MIN_POSTS_FOR_COMMENTING = int(os.environ.get("MIN_POSTS_FOR_COMMENTING", 0))
 MIN_POSTS_FOR_POSTING = int(os.environ.get("MIN_POSTS_FOR_POSTING", 0))
 MIN_ACCOUNT_AGE_FOR_COMMENTING = os.environ.get("MIN_ACCOUNT_AGE_FOR_COMMENTING")
 MIN_ACCOUNT_AGE_FOR_POSTING = os.environ.get("MIN_ACCOUNT_AGE_FOR_POSTING")
+
+# AWS settings
+AWS_ACCESS_KEY = os.environ.get("AWS_ACCESS_KEY")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+AWS_BUCKET_NAME = os.environ.get("AWS_BUCKET_NAME")
+AWS_S3_ENDPOINT = os.environ.get("AWS_S3_ENDPOINT")
+AWS_REGION = os.environ.get("AWS_REGION")
+AWS_CDN_URL = os.environ.get("AWS_CDN_URL")

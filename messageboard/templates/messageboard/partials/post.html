@@ -1,20 +1,25 @@
 <div class="bg-white px-4 py-5 sm:px-6 shadow mb-4 rounded">
     <div class="flex space-x-3">
         <div class="flex-shrink-0">
-            <img class="h-10 w-10 rounded-full"
+            <img class="h-12 w-12 rounded-full"
                  src="{{ post.actor.avatar_url }}"
                  alt="">
         </div>
         <div class="min-w-0 flex-1">
             <p class="font-semibold text-gray-900">
+                {% if post.pinned %}
+                    <i class="fa-sharp fa-thumb-tack text-yellow-600 text-sm"></i>
+                {% endif %}
                 <a href="{% url "post-view" post.pk %}" class="hover:underline">{{ post.title }}</a>
             </p>
             <p class="text-sm text-gray-900">
-                <a href="#" class="hover:underline font-semibold ">@{{ post.actor.display_name }}</a> <span
+                <a href="#" class="hover:underline font-semibold ">
+                    <i class="fa-sharp fa-user mr-1 text-xs"></i>{{ post.actor.display_name }}</a> <span
                     class="text-gray-500">{{ post.created_on|timesince }} ago</span>
             </p>
             <p class="text-xs text-gray-500">
-                {{ post.reply_count }} repl{{ post.reply_count|pluralize:"y,ies" }}
+                {{ post.reply_count }} repl{{ post.reply_count|pluralize:"y,ies" }} |
+                {{ post.views }} view{{ post.views|pluralize }}
             </p>
         </div>
         <div class="flex flex-shrink-0 self-center">

@@ -19,15 +19,20 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
-from messageboard.views import Authorize, Confirm, Landing
+from media.views import MediaAPI
+from messageboard.views import Authorize, Confirm, Landing, Logout, NewPosts, Search
 from posts.views import CreatePost, ViewPost
 
 urlpatterns = [
     path("", Landing.as_view(), name="landing"),
+    path("search", Search.as_view(), name="search"),
+    path("new", NewPosts.as_view(), name="new"),
     path("auth/authorize", Authorize.as_view(), name="authorize"),
     path("auth/confirm", Confirm.as_view(), name="confirm"),
+    path("auth/logout", Logout.as_view(), name="logout"),
     path("posts/create", CreatePost.as_view(), name="post-create"),
     path("posts/<int:post_id>", ViewPost.as_view(), name="post-view"),
+    path("api/v1/media", MediaAPI.as_view(), name="v1-media-api"),
     path("admin/", admin.site.urls),
 ]
 

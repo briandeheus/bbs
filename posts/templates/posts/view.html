@@ -1,4 +1,5 @@
 {% extends "messageboard/base.html" %}
+{% load markdown_tag %}
 
 {% block content %}
     <div class="bg-white px-4 py-5 sm:px-6 shadow mb-4 rounded">
@@ -79,7 +80,9 @@
             </div>
         </div>
         <div class="text-gray-900 text-sm mt-2">
-            {{ post.body }}
+            <article class="prose">
+                {{ post.body|markdownify }}
+            </article>
         </div>
     </div>
     {% if post.reply_count %}
@@ -101,7 +104,9 @@
                                         class="text-gray-500">{{ comment.created_on|timesince }} ago</span>
                             </p>
                             <div class="text-sm">
-                                {{ comment.body }}
+                                <article class="prose">
+                                    {{ comment.body|markdownify }}
+                                </article>
                             </div>
                         </div>
                     </div>
