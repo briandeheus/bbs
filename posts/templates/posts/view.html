@@ -104,30 +104,35 @@
                                         class="text-gray-500">{{ comment.created_on|timesince }} ago</span>
                             </p>
                             <div class="text-sm">
-                                <article class="prose">
+                                <article class="prose text-sm">
                                     {{ comment.body|markdownify }}
                                 </article>
                             </div>
                         </div>
                     </div>
-
                 </div>
-
             {% endfor %}
         </div>
     {% endif %}
-    <div class="bg-white px-4 py-5 sm:px-6 shadow mb-4 rounded">
-        <div class="text-sm mb-2 text-gray-900">
-            Replying as <span class="font-medium">@{{ request.user.display_name }}</span>
+    {% if request.user.is_authenticated %}
+        <div class="bg-white px-4 py-5 sm:px-6 shadow mb-4 rounded">
+            <div class="text-sm mb-2 text-gray-900">
+                Replying as <span class="font-medium">@{{ request.user.display_name }}</span>
+            </div>
+            <form method="post" enctype="application/x-www-form-urlencoded">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="add-comment">
+                <textarea class="rounded border border-gray-300 w-full p-2 h-32 text-sm" placeholder=""
+                          name="body" required></textarea>
+                {% if form and form.errors.body %}
+                    <div class="text-xs text-red-700 -mt-2 mb-2 pl-2">
+                        {{ form.errors.body }}
+                    </div>
+                {% endif %}
+                <button class="rounded-md px-3 py-2 text-sm text-white bg-purple-700 hover:bg-purple-900 hover:text-white">
+                    Add Comment
+                </button>
+            </form>
         </div>
-        <form method="post" enctype="application/x-www-form-urlencoded">
-            {% csrf_token %}
-            <input type="hidden" name="action" value="add-comment">
-            <textarea class="rounded border border-gray-300 w-full p-2 h-32 text-sm" placeholder=""
-                      name="body"></textarea>
-            <button class="rounded-md px-3 py-2 text-sm text-white bg-purple-700 hover:bg-purple-900 hover:text-white">
-                Add Comment
-            </button>
-        </form>
-    </div>
+    {% endif %}
 {% endblock %}

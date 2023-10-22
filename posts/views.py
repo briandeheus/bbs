@@ -28,7 +28,9 @@ class ViewPost(views.View):
         if action == "add-comment":
             comment = CommentForm(data=request.POST)
 
-            comment.is_valid()
+            if not comment.is_valid():
+                return self.get(request=request, post_id=post_id, form=comment)
+
             comment.instance.post = post
             comment.instance.actor = request.user
 
@@ -39,10 +41,10 @@ class ViewPost(views.View):
 
         return self.get(request=request, post_id=post_id)
 
-    def get(self, request, post_id):
+    def get(self, request, post_id, form=None):
         post = Post.objects.get(pk=post_id)
         post.increment_views()
-        return render(request, "posts/view.html", {"post": post})
+        return render(request, "posts/view.html", {"post": post, "form": form})
 
 
 # Create your views here.

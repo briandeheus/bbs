@@ -12,6 +12,7 @@
     <link href="{% static 'fontawesomepro/css/fontawesome.min.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'fontawesomepro/css/sharp-regular.min.css' %}" rel="stylesheet" type="text/css">
     <style>
+        #spinner,
         #backdrop {
             position: fixed;
             height: 100%;
@@ -20,6 +21,10 @@
             top: 0;
             left: 0;
             background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        #spinner {
+            background-color: rgba(0, 0, 0, 0.4);
         }
 
         .truncate-multiline {
@@ -35,6 +40,9 @@
 <body class="">
 {% include "messageboard/partials/navigation.html" %}
 <div id="backdrop" class="hidden"></div>
+<div id="spinner" class="hidden flex items-center justify-center h-screen w-screen text-white font-semibold">
+    Loading...
+</div>
 <main class="max-w-4xl w-full mx-auto mt-4">
     {% block content %}
     {% endblock %}
@@ -43,6 +51,7 @@
     const backdrop = document.getElementById("backdrop");
     const menuBtn = document.getElementById("user-menu-button");
     const menu = document.querySelector("[data-role=menu]");
+    const spinner = document.getElementById("spinner");
 
     if (menuBtn) {
 
@@ -65,6 +74,15 @@
     mobileMenuBtn.addEventListener("click", () => {
         mobileMenu.classList.toggle("hidden");
     });
+
+    window.showSpinner = (msg = "Loading...") => {
+        spinner.textContent = msg;
+        spinner.classList.remove("hidden");
+    }
+
+    window.hideSpinner = () => {
+        spinner.classList.add("hidden");
+    }
 
 </script>
 </body>
