@@ -6,7 +6,6 @@ from media.models import Media
 
 
 class MediaAPI(View):
-
     def post(self, request):
         file = request.FILES.get("file")
 
@@ -28,7 +27,7 @@ class MediaAPI(View):
             file_name=file.name,
             file_size=file.size,
             file_url=s3_url,
-            thumbnail_url=thumbnail_url
+            thumbnail_url=thumbnail_url,
         )
 
         # Return the file's URL in the response

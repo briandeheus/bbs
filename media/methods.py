@@ -8,11 +8,11 @@ from django.conf import settings
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
 s3_client = boto3.client(
-    's3',
+    "s3",
     aws_access_key_id=settings.AWS_ACCESS_KEY,
     aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
     region_name=settings.AWS_REGION,
-    endpoint_url=settings.AWS_S3_ENDPOINT
+    endpoint_url=settings.AWS_S3_ENDPOINT,
 )
 
 
@@ -40,11 +40,11 @@ def create_thumbnail(uploaded_file, max_dimension=600):
     # Convert bytes back to Django's InMemoryUploadedFile
     thumbnail_file = InMemoryUploadedFile(
         buffer,
-        'ImageField',
+        "ImageField",
         f"thumbnail_{image_name}",
         uploaded_file.content_type,
         buffer.tell,
-        None
+        None,
     )
 
     thumbnail_file.seek(0)
@@ -59,9 +59,7 @@ def upload_to_s3(uploaded_file):
         uploaded_file,
         settings.AWS_BUCKET_NAME,
         s3_file_name,
-        ExtraArgs={
-            'ContentType': uploaded_file.content_type
-        }
+        ExtraArgs={"ContentType": uploaded_file.content_type},
     )
 
     url = f"https://{settings.AWS_CDN_URL}/{s3_file_name}"
