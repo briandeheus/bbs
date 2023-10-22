@@ -1,0 +1,13 @@
+[Unit]
+Description=BBS Webserver
+After=network.target
+
+[Service]
+User=bbs
+Group=bbs
+WorkingDirectory=/home/bbs/bbs
+ExecStart=/home/bbs/bbs/bin/run.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
