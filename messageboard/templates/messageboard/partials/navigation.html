@@ -28,7 +28,7 @@
                                 <i class="fa-sharp fa-pencil mr-2 text-xs"></i>
                                 Create Post</a>
                         {% else %}
-                            <a href="{% url "authorize" %}"
+                            <a href="{% url "login" %}"
                                class="rounded-md px-3 py-2 text-sm text-white bg-purple-700 hover:bg-purple-900 hover:text-white">
                                 <i class="fa-sharp fa-right-to-bracket mr-2 text-xs"></i> Login</a>
                         {% endif %}
@@ -142,7 +142,7 @@
                            class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign
                             out</a>
                     {% else %}
-                        <a href="{% url "authorize" %}"
+                        <a href="{% url "login" %}"
                            class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Log
                             In</a>
                     {% endif %}

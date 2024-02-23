@@ -37,31 +37,58 @@
                 }
 
                 const jsonResponse = await response.json();
-                const {thumbnail_url, url} = jsonResponse;
+                const {thumbnail_url, id} = jsonResponse;
+                window.hideSpinner();
 
-                if (body.value === "") {
-                    body.value = `[![Image](${thumbnail_url})](${url})`;
-                } else {
-                    body.value = `${body.value}\n\n[![Image](${thumbnail_url})](${url})`;
-                }
-
+                return {thumbnail_url, id}
 
             } catch (error) {
-                alert("Something went wrong. Try again.");
+
                 console.error('Error uploading image:', error);
+                alert("Something went wrong. Try again.");
+                window.hideSpinner();
+
             }
-
-            window.hideSpinner();
-
 
         }
 
         document.addEventListener("DOMContentLoaded", () => {
             const imageInput = document.getElementById("image-input");
             const imageUploadBtn = document.getElementById("image-upload");
+            const formElm = document.getElementById("post-form");
+            const imageElms = document.getElementById("images");
 
-            imageInput.addEventListener('change', function () {
-                uploadImageToAPI(this);
+            imageInput.addEventListener('change', async function () {
+
+                const {thumbnail_url, id} = await uploadImageToAPI(this);
+                const wrapper = document.createElement("span");
+                wrapper.className = "relative inline-block mb-2 me-2"
+
+                const image = document.createElement("img")
+                image.className = "inline-block h-14 w-14 rounded-md border border-gray-300";
+                image.src = thumbnail_url;
+
+                const deleteBtn = document.createElement("span");
+                deleteBtn.textContent = "x"
+                deleteBtn.style.lineHeight = "14px"
+                deleteBtn.className = "absolute text-sm cursor-pointer text-center text-white right-0 top-0 block h-4 w-4 -translate-y-1/2 translate-x-1/2 transform rounded-full bg-red-500 ring-2 ring-white"
+
+                wrapper.appendChild(image);
+                wrapper.appendChild(deleteBtn);
+                imageElms.appendChild(wrapper);
+
+                const formInput = document.createElement("input")
+                formInput.type = "hidden"
+                formInput.name = "media"
+                formInput.value = id;
+
+                formElm.appendChild(formInput);
+
+                deleteBtn.addEventListener("click", () => {
+                    formElm.removeChild(formInput);
+                    imageElms.removeChild(wrapper);
+                });
+
             });
 
             imageUploadBtn.addEventListener("click", () => {
@@ -82,7 +109,7 @@
                 {{ error }}
             </div>
         {% endfor %}
-        <form method="post" enctype="application/x-www-form-urlencoded">
+        <form method="post" enctype="application/x-www-form-urlencoded" id="post-form">
             {% csrf_token %}
             <input class="rounded border border-gray-300 w-full p-2 text-sm mb-2"
                    placeholder="Enter the title of your post here..."
@@ -103,6 +130,7 @@
             <div class="text-xs mb-4 text-right">
                 <span id="image-upload" class="text-gray-700 cursor-pointer"><i class="fa-sharp fa-upload"></i> Add image</span>
             </div>
+            <div class="mb-4" id="images"></div>
             <button class="rounded-md px-3 py-2 text-sm text-white bg-purple-700 hover:bg-purple-900 hover:text-white">
                 <i class="fa-sharp fa-pencil mr-2"></i> Post
             </button>

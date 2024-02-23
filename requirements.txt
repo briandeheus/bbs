@@ -26,6 +26,7 @@ hyperlink==21.0.0
 idna==3.4
 incremental==22.10.0
 ipython==8.16.1
+isort==5.13.2
 jedi==0.19.1
 jmespath==1.0.1
 Markdown==3.5

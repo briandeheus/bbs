@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.views import View
 
-from media.methods import upload_to_s3, create_thumbnail
+from media.methods import create_thumbnail, upload_to_s3
 from media.models import Media
 
 
@@ -21,7 +21,7 @@ class MediaAPI(View):
         user = request.user if request.user.is_authenticated else None
 
         # Save the image details to the Media model
-        Media.objects.create(
+        media = Media.objects.create(
             actor=user,
             file_type=file.content_type,
             file_name=file.name,
@@ -31,4 +31,6 @@ class MediaAPI(View):
         )
 
         # Return the file's URL in the response
-        return JsonResponse({"url": s3_url, "thumbnail_url": thumbnail_url})
+        return JsonResponse(
+            {"url": s3_url, "thumbnail_url": thumbnail_url, "id": media.id}
+        )

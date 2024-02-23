@@ -1,17 +1,22 @@
-from django import views, forms
+from django import forms, views
 from django.conf import settings
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
 
+from media.models import Media
 from posts import methods as post_methods
-from posts.models import Post, Comment
+from posts.models import Comment, Post
 
 
 class SubmitForm(forms.ModelForm):
+    media = forms.ModelMultipleChoiceField(
+        queryset=Media.objects.all(),
+    )
+
     class Meta:
         model = Post
-        fields = ["title", "body"]
+        fields = ["title", "body", "media"]
 
 
 class CommentForm(forms.ModelForm):

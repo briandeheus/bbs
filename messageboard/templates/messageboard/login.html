@@ -1,3 +1,20 @@
+{% extends "messageboard/base.html" %}
 {% block content %}
-    Login
+    <div class="bg-white px-4 py-5 sm:px-6 shadow mb-4 rounded">
+        <div class="text-gray-900 text-sm">
+            <div class="text-xl text-bold mb-4">
+                Login with Mastodon
+            </div>
+            <div class="mb-4">
+                Logins are handled securely by Mastodon. When you click on the <span>login</span> button you will be
+                redirected to <a href="https://famichiki.jp" target="_blank">famichiki.jp</a> where you can authorize
+                the messageboard to log you in. You will then be redirected to the messageboard where you can now post.
+            </div>
+            <div>
+                <a href="{% url "authorize" %}"
+                   class="rounded-md px-3 py-2 text-sm text-white bg-purple-700 hover:bg-purple-900 hover:text-white">
+                    <i class="fa-sharp fa-elephant mr-2 text-xs"></i> Login with Mastodon</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}

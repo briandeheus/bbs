@@ -84,6 +84,18 @@
                 {{ post.body|markdownify }}
             </article>
         </div>
+        {% if post.media.exists %}
+            <div class="text-gray-900 text-sm mt-4">
+                <div class="mb-2 text-xs text-gray-600">Attachments:</div>
+                {% for media in post.media.all %}
+                    <a href="{{ media.file_url }}" target="_blank"
+                       class="relative inline-block mb-2 me-2 cursor-pointer">
+                        <img src="{{ media.thumbnail_url }}"
+                             class="inline-block h-16 w-16 rounded-md border border-gray-300">
+                    </a>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
     {% if post.reply_count %}
         <div class="bg-white px-4 py-5 sm:px-6 shadow mb-4 rounded">

@@ -3,9 +3,9 @@ import secrets
 from io import BytesIO
 
 import boto3
-from PIL import Image
 from django.conf import settings
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from PIL import Image
 
 s3_client = boto3.client(
     "s3",

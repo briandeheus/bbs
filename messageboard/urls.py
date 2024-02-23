@@ -20,7 +20,15 @@ from django.contrib import admin
 from django.urls import path
 
 from media.views import MediaAPI
-from messageboard.views import Authorize, Confirm, Landing, Logout, NewPosts, Search
+from messageboard.views import (
+    Authorize,
+    Confirm,
+    Landing,
+    Login,
+    Logout,
+    NewPosts,
+    Search,
+)
 from posts.views import CreatePost, ViewPost
 
 urlpatterns = [
@@ -29,6 +37,7 @@ urlpatterns = [
     path("new", NewPosts.as_view(), name="new"),
     path("auth/authorize", Authorize.as_view(), name="authorize"),
     path("auth/confirm", Confirm.as_view(), name="confirm"),
+    path("auth/login", Login.as_view(), name="login"),
     path("auth/logout", Logout.as_view(), name="logout"),
     path("posts/create", CreatePost.as_view(), name="post-create"),
     path("posts/<int:post_id>", ViewPost.as_view(), name="post-view"),

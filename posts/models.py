@@ -1,4 +1,4 @@
-from django.contrib.postgres.search import SearchQuery, SearchVector, SearchRank
+from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 from django.db import models
 from django.db.models import F
 
@@ -36,6 +36,7 @@ class Post(models.Model):
     actor = models.ForeignKey("messageboard.User", null=True, on_delete=models.SET_NULL)
     pinned = models.BooleanField(default=False)
     views = models.IntegerField(default=0)
+    media = models.ManyToManyField("media.Media")
 
     class Meta:
         ordering = ["-last_activity"]

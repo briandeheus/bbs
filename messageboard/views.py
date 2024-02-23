@@ -1,13 +1,13 @@
 from django.contrib.auth import login, logout
 from django.core.paginator import Paginator
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import View
 
 from messageboard.models import User
 from messageboard.utils.oauth import (
-    get_authorization_url,
     get_authorization_token,
+    get_authorization_url,
     protected_call,
 )
 from posts.models import Post
@@ -54,6 +54,11 @@ class NewPosts(View):
             template_name="messageboard/landing.html",
             context={"page_obj": page_obj},
         )
+
+
+class Login(View):
+    def get(self, request):
+        return render(request=request, template_name="messageboard/login.html")
 
 
 class Logout(View):
